@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "953866697206",
+    "firebase_url": "https://islamic-life-3fe4e.firebaseio.com",
+    "project_id": "islamic-life-3fe4e",
+    "storage_bucket": "islamic-life-3fe4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953866697206:android:7bf8ee0a0192fd00",
+        "android_client_info": {
+          "package_name": "com.harbingerstudio.islamiclife.islamiclife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953866697206-mdm5rieigvm4kq6ag2t61nspjshgdiqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.harbingerstudio.islamiclife.islamiclife",
+            "certificate_hash": "5aa6442f516d1392897de167efd6d80f3e036859"
+          }
+        },
+        {
+          "client_id": "953866697206-eko3kt05kaualmbusvu3280oj8i2g0kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXNOQxyZxgGrI-ZlX9hKHlWSYusxVtBE8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953866697206-eko3kt05kaualmbusvu3280oj8i2g0kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

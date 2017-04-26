@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navhome"
+        android:title="@string/navhome"
+        android:icon="@drawable/ic_home"
+        />
+    <item
+        android:id="@+id/navmosque"
+        android:title="@string/navmosque"
+        android:icon="@drawable/ic_mosque_locator"
+        />
+    <item
+        android:id="@+id/navkiblah"
+        android:title="@string/navkiblah"
+        android:icon="@drawable/ic_face"
+        />
+    <item
+        android:id="@+id/navnews"
+        android:title="@string/neavnews"
+        android:icon="@drawable/ic_tasbih"
+        />
+
+
+</menu>
