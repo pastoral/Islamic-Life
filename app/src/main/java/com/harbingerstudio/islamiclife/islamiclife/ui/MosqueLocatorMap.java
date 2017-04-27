@@ -171,7 +171,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap map) {
 
         mMap = map;
-       
+
         if(ContextCompat.checkSelfPermission(MosqueLocatorMap.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLastLocation = LocationServices.FusedLocationApi
                     .getLastLocation(mGoogleApiClient);
@@ -233,9 +233,14 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
                 mMap.setMyLocationEnabled(true);
             }
 
-            mLastLocation =LocationServices.FusedLocationApi
-                    .getLastLocation(mGoogleApiClient);
-            if(mLastLocation != null) {
+            if(mLastLocation == null) {
+                mLastLocation = LocationServices.FusedLocationApi
+                        .getLastLocation(mGoogleApiClient);
+            }
+            else{
+                return;
+            }
+            if(mLastLocation != null){
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         new LatLng(mLastLocation.getLatitude(),
