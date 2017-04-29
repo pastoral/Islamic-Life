@@ -19,5 +19,7 @@ public class Constants {
     public static final String APPTAG = "IslamicLife Application";
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
-    private static int DISPLACEMENT = 10; // 10 meters
+    private static final int DISPLACEMENT = 10; // 10 meters
+    public static final String API_KEY = "AIzaSyB7awxRI7GvPVHTEfsrn_dszaFa4tHfJsA";
+    public static final String PLACE_MOSQUE = "mosque";
 }
