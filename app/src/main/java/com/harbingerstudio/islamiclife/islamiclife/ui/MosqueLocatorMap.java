@@ -37,9 +37,12 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -85,6 +88,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
     protected LocationRequest mLocationRequest;
     private SupportMapFragment mapFragment;
     public LocationSettingsRequest mLocationSettingsRequest;
+    public PlaceAutocompleteFragment autocompleteFragment;
     //private ResponeReceiver receiver;
     private IntentFilter filter;
 
@@ -130,6 +134,32 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
       mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
         createLocationRequest();
+        autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("Mosque Locator", "Place: " + place.getName());
+                LatLng foundPlace = place.getLatLng();
+                Intent i = new Intent(getApplicationContext(),PickLocationInMap.class);
+                i.putExtra("Latitude" , String.valueOf(foundPlace.latitude));
+                i.putExtra("Longitude" , String.valueOf(foundPlace.longitude));
+                i.putExtra("Title", String.valueOf(place.getName()));
+                i.putExtra("Snipet", String.valueOf(place.getAddress()));
+                startActivity(i);
+                //mMap.clear();
+
+                //stopLocationUpdate();
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("Mosque Locator", "An error occurred: " + status);
+            }
+        });
 
     }
 
@@ -277,6 +307,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
                                 mMap.clear();
                                 mMap.setMyLocationEnabled(true);
                                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                                mMap.setBuildingsEnabled(true);
                             }
                             mosqueLocationList = result.data.getResults();
                             for(int i = 0; i<result.data.getResults().size(); i++){
