@@ -22,4 +22,6 @@ public class Constants {
     private static final int DISPLACEMENT = 10; // 10 meters
     public static final String API_KEY = "AIzaSyB7awxRI7GvPVHTEfsrn_dszaFa4tHfJsA";
     public static final String PLACE_MOSQUE = "mosque";
+    public static final String[] PRAYER_NAME_ENG= {"Fajr","Duhur", "Asr", "Maghrib", "Isha"};
+    public static final String[] PRAYER_NAME_BAN= {"ফজর","জোহর", "আসর", "মাগরিব", "এশা"};
 }

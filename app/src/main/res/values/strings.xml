@@ -21,4 +21,17 @@
     <string name="pick_place">Choose a place</string>
     <string name="title_activity_temp_map">Map</string>
     <string name="title_activity_pick_location_in_map">Map</string>
+
+    <string name="fajr">Fajr</string>
+    <string name="duruh">Duhur</string>
+    <string name="asr">Asr</string>
+    <string name="maghrib">Maghrib</string>
+    <string name="isha">Isha</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+
+    <string name = "dailyprayertime">Today</string>
+    <string name = "calenderprayertime">Calender</string>
+
+    <string name="prayertimestring">Prayer Time Schedule</string>
 </resources>

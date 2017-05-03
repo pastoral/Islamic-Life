@@ -71,7 +71,7 @@ public class LauncherFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
                         String itemName = layoutListModels[position].getTitle();
-                        Toast.makeText(getActivity(),"You clicked on" + String.valueOf(itemName), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getActivity(),"You clicked on" + String.valueOf(itemName), Toast.LENGTH_SHORT).show();
                         Fragment fragment = null;
                         FragmentManager manager = getFragmentManager();
                         FragmentTransaction transaction = manager.beginTransaction();
@@ -93,6 +93,16 @@ public class LauncherFragment extends Fragment {
                             case "মসজিদ" :
                                 Intent intent = new Intent(getContext(), MosqueLocatorMap.class);
                                 startActivity(intent);
+                                break;
+
+                            case "নামায" :
+                                fragment = new NamazFragment();
+
+                                // transaction.remove(new LauncherFragment());
+                                //transaction.add(R.id.launcherfragment , new RamadanFragment().newInstance());
+                                transaction.replace(R.id.container_id ,fragment,"fragment-namaz");
+                                transaction.addToBackStack("namaz");
+                                transaction.commit();
                                 break;
                         }
                     }

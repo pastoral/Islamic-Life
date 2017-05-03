@@ -122,7 +122,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_mosque_locator_map);
 
 
-        MosqueLocatorMap.super.requestAppPermissions(permisionList, R.string.runtime_permissions_txt, permsRequestCode);
+
 
        // filter = new IntentFilter(ResponeReceiver.ACTION_RESP);
         //filter.addCategory(Intent.CATEGORY_DEFAULT);

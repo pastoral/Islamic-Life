@@ -28,12 +28,15 @@ import com.harbingerstudio.islamiclife.islamiclife.adapters.MainLayoutRecyclerAd
 import com.harbingerstudio.islamiclife.islamiclife.model.LayoutListItmes;
 import com.harbingerstudio.islamiclife.islamiclife.model.LayoutListModel;
 import com.harbingerstudio.islamiclife.islamiclife.ui.LauncherFragment;
+import com.harbingerstudio.islamiclife.islamiclife.ui.MosqueLocatorMap;
 import com.harbingerstudio.islamiclife.islamiclife.ui.RamadanFragment;
 import com.harbingerstudio.islamiclife.islamiclife.utils.RecyclerItemClickListener;
 
 import static com.harbingerstudio.islamiclife.islamiclife.Constants.APPTAG;
+import static com.harbingerstudio.islamiclife.islamiclife.Constants.permisionList;
+import static com.harbingerstudio.islamiclife.islamiclife.Constants.permsRequestCode;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
     public RecyclerView recyclerView;
     private GoogleApiClient mGoogleApiClient;
     @Override
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
        // layoutListItmes = new LayoutListItmes();
 
         setSupportActionBar(toolbar);
+        MainActivity.super.requestAppPermissions(permisionList, R.string.runtime_permissions_txt, permsRequestCode);
         isGooglePlayServicesAvailable(this);
     }
 

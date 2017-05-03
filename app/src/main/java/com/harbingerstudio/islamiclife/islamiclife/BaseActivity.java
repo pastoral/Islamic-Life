@@ -19,7 +19,7 @@ import android.view.View;
  * Created by User on 4/20/2017.
  */
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends AppCompatActivity {
     private SparseIntArray mErrorString;
     private int permissionCheck;
     public boolean permissionGranted;
