@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.harbingerstudio.islamiclife.islamiclife.R;
 
 /**
@@ -31,11 +32,13 @@ public class DailyPrayerTimeAdapter extends RecyclerView.Adapter<DailyPrayerTime
     class DailyPrayerTimeHolder extends RecyclerView.ViewHolder{
         private TextView prayernameenglish, prayernamebangla ;
         private TextView txtclock;
+        private CardView namazcard;
         public DailyPrayerTimeHolder(View view){
             super(view);
             prayernameenglish = (TextView)view.findViewById(R.id.prayernameenglish);
             prayernamebangla = (TextView)view.findViewById(R.id.prayernamebangla);
             txtclock = (TextView)view.findViewById(R.id.txtclock);
+            namazcard = (CardView)view.findViewById(R.id.namazcard);
         }
     }
 
@@ -50,6 +53,7 @@ public class DailyPrayerTimeAdapter extends RecyclerView.Adapter<DailyPrayerTime
         holder.prayernameenglish.setText(PRAYER_NAME_ENG[position]);
         holder.prayernamebangla.setText(PRAYER_NAME_BAN[position]);
         holder.txtclock.setText(timeFormatting(prayerTime[position]));
+        holder.namazcard.setCardBackgroundColor(getRandomColor());
     }
 
     @Override
@@ -71,5 +75,11 @@ public class DailyPrayerTimeAdapter extends RecyclerView.Adapter<DailyPrayerTime
             time = s + "AM";
         }
         return time;
+    }
+
+    private int getRandomColor(){
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int color = generator.getRandomColor();
+        return color;
     }
 }

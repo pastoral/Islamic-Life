@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.SparseIntArray;
 import android.view.View;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 /**
  * Created by User on 4/20/2017.
  */
@@ -32,6 +34,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         // mErrorString = new SparseIntArray();
+        JodaTimeAndroid.init(this);
     }
 
     @Override

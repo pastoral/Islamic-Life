@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -55,6 +56,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'net.danlew:android.joda:2.9.9'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/namazfragmentroot"
     android:orientation="vertical">
 
 
@@ -32,6 +33,30 @@
             android:text="@string/prayertimestring"
             android:textSize="19sp"
             android:gravity="center_horizontal"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txtenglishdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="8dp"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtarabichdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingRight="8dp"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,12 +117,27 @@
 
     </TabHost> -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout3"></LinearLayout>
+
+        android:id="@+id/linearLayout3">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:id="@+id/txtsunrise"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtsunset"
+            android:textSize="16sp"
+            android:layout_below="@+id/txtsunrise"
+            android:layout_centerHorizontal="true"
+           />
+    </RelativeLayout>
 
 
 </LinearLayout>

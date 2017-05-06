@@ -37,6 +37,7 @@ package="com.harbingerstudio.islamiclife.islamiclife">
 
     <service android:name=".services.LocationUpdates" android:exported="false" />
     <service android:name=".services.BackgroundLocationService" android:exported="false"></service>
+
 </application>
 
 </manifest>

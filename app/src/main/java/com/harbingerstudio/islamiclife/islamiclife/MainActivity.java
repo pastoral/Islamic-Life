@@ -2,6 +2,9 @@ package com.harbingerstudio.islamiclife.islamiclife;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appinvite.AppInvite;
@@ -36,9 +40,12 @@ import static com.harbingerstudio.islamiclife.islamiclife.Constants.APPTAG;
 import static com.harbingerstudio.islamiclife.islamiclife.Constants.permisionList;
 import static com.harbingerstudio.islamiclife.islamiclife.Constants.permsRequestCode;
 
-public class MainActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener{
     public RecyclerView recyclerView;
     private GoogleApiClient mGoogleApiClient;
+    private Snackbar snackbar;
+    private IntentFilter filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +57,8 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         setSupportActionBar(toolbar);
         MainActivity.super.requestAppPermissions(permisionList, R.string.runtime_permissions_txt, permsRequestCode);
         isGooglePlayServicesAvailable(this);
+
+
     }
 
     @Override
@@ -66,8 +75,10 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     @Override
     protected void onResume() {
         super.onResume();
+
         isGooglePlayServicesAvailable(this);
         //testDB();
+
         if(isGooglePlayServicesAvailable(this)){
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(AppInvite.API)
@@ -76,6 +87,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         else{
             return;
         }
+
 
     }
 
@@ -135,5 +147,33 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         Log.d(APPTAG,"onConnectionFailed:" + connectionResult);
         //showMessage(getString(R.string.google_play_services_error));
         Toast.makeText(this,getString(R.string.google_play_services_error),Toast.LENGTH_LONG).show();
+    }
+
+
+
+    private void showSnack(boolean isConnected){
+        String message;
+        int color;
+        if(!isConnected){
+            message = getString(R.string.nointernetconnection);
+            color = Color.RED;
+        }
+        else{
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+        }
+        snackbar = Snackbar.make(findViewById(R.id.bottomnav), message, Snackbar.LENGTH_INDEFINITE);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView)sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
     }
 }
