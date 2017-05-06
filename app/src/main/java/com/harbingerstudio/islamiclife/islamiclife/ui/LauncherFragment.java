@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,7 +49,8 @@ public class LauncherFragment extends Fragment {
          view = inflater.inflate(R.layout.launcher_fragment, container,false);
        // Recy
         recyclerView = (RecyclerView)view.findViewById(R.id.layourrecycler);
-        layoutManager = new LinearLayoutManager(getContext());
+       // layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new GridLayoutManager(getContext(),2);
         //outputFragment = (FragmentManager)view.findViewById(R.id.launcherfragment);
         return view;
     }
