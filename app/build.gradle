@@ -1,16 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.harbingerstudio.islamiclife.islamiclife"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [onesignal_app_id               : "36f992f6-cc35-4778-9b91-25c6ed896953",
+                                onesignal_google_project_number: "953866697206"]
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -32,32 +35,42 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.google.firebase:firebase-core:10.2.1'
-    compile 'com.google.firebase:firebase-database:10.2.1'
-    compile 'com.firebase:firebase-client-android:2.4.0'
-    compile 'com.firebaseui:firebase-ui-database:0.4.3'
-    compile 'com.google.firebase:firebase-config:10.2.1'
-    compile 'com.google.firebase:firebase-ads:10.2.1'
-    compile 'com.google.firebase:firebase-invites:10.2.1'
-    compile 'com.google.firebase:firebase-auth:10.2.1'
-    compile 'com.firebaseui:firebase-ui-auth:1.2.0'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'com.google.android.gms:play-services-auth:10.2.1'
-    compile 'com.google.android.gms:play-services-gcm:10.2.1'
-    compile 'com.google.android.gms:play-services-maps:10.2.1'
-    compile 'com.google.android.gms:play-services:10.2.1'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'net.danlew:android.joda:2.9.9'
-    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.onesignal:OneSignal:[3.8.3, 3.99.99)'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation 'com.google.android.gms:play-services-maps:12.0.1'
+    // Required only if Facebook login support is required
+    implementation('com.facebook.android:facebook-android-sdk:4.25.0') // never change this
+    implementation 'com.google.android.gms:play-services-location:12.0.1'
+    implementation 'com.google.android.gms:play-services-maps:12.0.1'
+    implementation 'com.google.android.gms:play-services-ads:12.0.1'
+
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:3.3.0'
+
+// FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:3.3.0'
+
+// FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:3.3.0'
+
+// FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:3.3.0'
+    implementation 'com.facebook.fresco:fresco:0.6.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    implementation 'net.danlew:android.joda:2.9.9'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    testImplementation  'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

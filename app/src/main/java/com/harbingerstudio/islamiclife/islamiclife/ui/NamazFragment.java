@@ -53,14 +53,14 @@ import com.harbingerstudio.islamiclife.islamiclife.retrofit.PrayerTimeApiClient;
 import com.harbingerstudio.islamiclife.islamiclife.utils.ArabicUtils;
 import com.harbingerstudio.islamiclife.islamiclife.utils.CheckInternet;
 import com.harbingerstudio.islamiclife.islamiclife.utils.ProgressBarHandler;
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
+
 
 import java.util.Locale;
 import java.util.TimeZone;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 import static android.R.attr.fragment;
@@ -238,11 +238,11 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
        Call<com.harbingerstudio.islamiclife.islamiclife.pojo.arabicdate.Example> exampleCall = arabicDateInterface.getArabicDate(new ArabicUtils().splitDate(date));
        exampleCall.enqueue(new Callback<com.harbingerstudio.islamiclife.islamiclife.pojo.arabicdate.Example>() {
            @Override
-           public void success(Result<com.harbingerstudio.islamiclife.islamiclife.pojo.arabicdate.Example> result) {
+           public void onResponse(Call<com.harbingerstudio.islamiclife.islamiclife.pojo.arabicdate.Example> call, Response<com.harbingerstudio.islamiclife.islamiclife.pojo.arabicdate.Example> response) {
                try{
-                   String month = result.data.getData().getHijri().getMonth().getEn();
-                   String day = result.data.getData().getHijri().getDay();
-                   String year = result.data.getData().getHijri().getYear();
+                   String month = response.body().getData().getHijri().getMonth().getEn();
+                   String day = response.body().getData().getHijri().getDay();
+                   String year = response.body().getData().getHijri().getYear();
 
                    txtarabichdate.setText(day + " " + month + " " + year);
                }
@@ -253,9 +253,11 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
            }
 
            @Override
-           public void failure(TwitterException exception) {
+           public void onFailure(Call<com.harbingerstudio.islamiclife.islamiclife.pojo.arabicdate.Example> call, Throwable t) {
 
            }
+
+
        });
 
 
@@ -263,7 +265,7 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
 
     protected LocationRequest createLocationRequest() {
         Log.i(TAG, "createLocationRequest()");
-        mLocationRequest = new LocationRequest();
+        mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -386,14 +388,12 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
             //Toast.makeText(getContext(),String.valueOf(currentLocation.getLatitude()) + "  " + String.valueOf(currentLocation.getLongitude()), Toast.LENGTH_SHORT).show();
             //Intent mIntent = new
             mProgressBarHandler.show();
-            Call<Example> call = apiClient.getPrayerTime(String.valueOf(currentLocation.getLatitude()),String.valueOf(currentLocation.getLongitude()),strTimeZone,String.valueOf(3));
+            Call<Example> call = apiClient.getPrayerTime(String.valueOf(currentLocation.getLatitude()),String.valueOf(currentLocation.getLongitude()),strTimeZone,String.valueOf(3),String.valueOf(1));
             call.enqueue(new Callback<Example>() {
                 @Override
-                public void success(Result<Example> result) {
-                    // timings = result.data.getTimings();
-                    //Log.d(TAG, "Yeeeeeeeee");
+                public void onResponse(Call<Example> call, Response<Example> response) {
                     try {
-                        timings = result.data.getData().getTimings();
+                        timings = response.body().getData().getTimings();
                         namazTimes[0] = timings.getFajr();
                         namazTimes[1] = timings.getDhuhr();
                         namazTimes[2] = timings.getAsr();
@@ -403,7 +403,7 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
                         strSunset = timeFormatting(timings.getSunset());
                         //String getDate = result.data.getData().getDate().getTimestamp();
                         mProgressBarHandler.hide();
-                        txtenglishdate.setText(result.data.getData().getDate().getReadable());
+                        txtenglishdate.setText(response.body().getData().getDate().getReadable());
                         txtsunrise.setText(getString(R.string.sunrise) +  strSunrise);
                         txtsunset.setText(getString(R.string.sunset) +  strSunset);
                         // strTimeZone = new ArabicUtils().splitDate(new ArabicUtils().getDateFromTimestamp(Long.parseLong(result.data.getData().getDate().getTimestamp())));
@@ -420,9 +420,10 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
                 }
 
                 @Override
-                public void failure(TwitterException exception) {
-                    Log.d("TAG" ," FAILED");
+                public void onFailure(Call<Example> call, Throwable t) {
+
                 }
+
             });
 
         }

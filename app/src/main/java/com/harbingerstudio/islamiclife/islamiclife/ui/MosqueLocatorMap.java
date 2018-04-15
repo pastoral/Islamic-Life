@@ -60,12 +60,14 @@ import com.harbingerstudio.islamiclife.islamiclife.retrofit.ApiClient;
 import com.harbingerstudio.islamiclife.islamiclife.retrofit.ApiPlaceLocatorInterface;
 import com.harbingerstudio.islamiclife.islamiclife.services.BackgroundLocationService;
 import com.harbingerstudio.islamiclife.islamiclife.services.LocationUpdates;
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.TwitterException;
+//import com.twitter.sdk.android.core.Callback;
+//import com.twitter.sdk.android.core.TwitterException;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.harbingerstudio.islamiclife.islamiclife.Constants.API_KEY;
 import static com.harbingerstudio.islamiclife.islamiclife.Constants.FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS;
@@ -85,7 +87,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
     private static final String MosqueLocatorTAG = MosqueLocatorMap.class.getSimpleName();
 
     private boolean mRequestingLocationUpdates;
-    protected LocationRequest mLocationRequest;
+    public LocationRequest mosqueLocationRequest;
     private SupportMapFragment mapFragment;
     public LocationSettingsRequest mLocationSettingsRequest;
     public PlaceAutocompleteFragment autocompleteFragment;
@@ -169,6 +171,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
         mLastLocation = new Location("");
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
+
         }
         //receiver = new ResponeReceiver();
         if(!mRequestingLocationUpdates){
@@ -263,7 +266,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
     private void startLocationUpdate(){
         Log.d("STARTLOC update", "startLocationUpdate fired");
         if(ContextCompat.checkSelfPermission(MosqueLocatorMap.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mosqueLocationRequest, this);
         }
        /* Intent intent = new Intent(this, BackgroundLocationService.class);
         intent.putExtra("requestId", 101);
@@ -299,9 +302,7 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
                 Call<Example> call = apiClient.getNearbyPlaces(location,"1000",PLACE_MOSQUE,API_KEY);
                 call.enqueue(new Callback<Example>() {
                     @Override
-                    public void success(com.twitter.sdk.android.core.Result<Example> result) {
-                       // mosqueLocationList = result.data.getResults();
-                        //Log.d("TAAAAG" , result.data.toString());
+                    public void onResponse(Call<Example> call, Response<Example> response) {
                         try{
                             if(ContextCompat.checkSelfPermission(MosqueLocatorMap.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                                 mMap.clear();
@@ -309,12 +310,12 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
                                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
                                 mMap.setBuildingsEnabled(true);
                             }
-                            mosqueLocationList = result.data.getResults();
-                            for(int i = 0; i<result.data.getResults().size(); i++){
-                                Double lat = result.data.getResults().get(i).getGeometry().getLocation().getLat();
-                                Double lng = result.data.getResults().get(i).getGeometry().getLocation().getLng();
-                                 placeName = result.data.getResults().get(i).getName();
-                                vicinity = result.data.getResults().get(i).getVicinity();
+                            mosqueLocationList = response.body().getResults();
+                            for(int i = 0; i<response.body().getResults().size(); i++){
+                                Double lat = response.body().getResults().get(i).getGeometry().getLocation().getLat();
+                                Double lng = response.body().getResults().get(i).getGeometry().getLocation().getLng();
+                                placeName = response.body().getResults().get(i).getName();
+                                vicinity = response.body().getResults().get(i).getVicinity();
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 LatLng latLng = new LatLng(lat, lng);
                                 // Position of Marker on Map
@@ -356,9 +357,10 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
                     }
 
                     @Override
-                    public void failure(TwitterException exception) {
-                        Log.d("TAAAAG" ," FAILED");
+                    public void onFailure(Call<Example> call, Throwable t) {
+                        Log.d("TAAAAG" ," Mosque location retrofit failed");
                     }
+
                 });
 
                // Toast.makeText(this, String.valueOf(mLastLocation.getLatitude()) + "  " + String.valueOf(mLastLocation.getLongitude()), Toast.LENGTH_SHORT);
@@ -481,12 +483,12 @@ public class MosqueLocatorMap extends BaseActivity implements OnMapReadyCallback
 
     protected LocationRequest createLocationRequest() {
         Log.i(MosqueLocatorTAG, "createLocationRequest()");
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setSmallestDisplacement(10);
-        return mLocationRequest;
+        mosqueLocationRequest = LocationRequest.create();
+        mosqueLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+        mosqueLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        mosqueLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mosqueLocationRequest.setSmallestDisplacement(10);
+        return mosqueLocationRequest;
     }
 
     protected synchronized void buildGoogleApiClient(){

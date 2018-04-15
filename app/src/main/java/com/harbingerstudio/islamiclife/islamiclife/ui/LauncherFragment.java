@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.harbingerstudio.islamiclife.islamiclife.IslamicLifeApp;
 import com.harbingerstudio.islamiclife.islamiclife.R;
 import com.harbingerstudio.islamiclife.islamiclife.adapters.MainLayoutRecyclerAdapter;
 import com.harbingerstudio.islamiclife.islamiclife.model.LayoutListItmes;
@@ -50,7 +51,7 @@ public class LauncherFragment extends Fragment {
        // Recy
         recyclerView = (RecyclerView)view.findViewById(R.id.layourrecycler);
        // layoutManager = new LinearLayoutManager(getContext());
-        layoutManager = new GridLayoutManager(getContext(),2);
+        layoutManager = new GridLayoutManager(IslamicLifeApp.getContext(),2);
         //outputFragment = (FragmentManager)view.findViewById(R.id.launcherfragment);
         return view;
     }
@@ -59,7 +60,7 @@ public class LauncherFragment extends Fragment {
     public void onStart() {
         super.onStart();
         recyclerView.setLayoutManager(layoutManager);
-        mainLayoutRecyclerAdapter = new MainLayoutRecyclerAdapter(getContext(),layoutListModels);
+        mainLayoutRecyclerAdapter = new MainLayoutRecyclerAdapter(IslamicLifeApp.getContext(),layoutListModels);
         //recyclerView.hasFixedSize();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }

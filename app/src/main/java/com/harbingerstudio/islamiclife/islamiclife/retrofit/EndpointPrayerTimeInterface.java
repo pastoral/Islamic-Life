@@ -14,5 +14,5 @@ import retrofit2.http.Query;
 
 public interface EndpointPrayerTimeInterface {
 @GET("/timings")
-    Call<Example>getPrayerTime(@Query("latitude") String latitude, @Query("longitude") String longitude, @Query("timezonestring") String timezonestring, @Query("method") String method);
+    Call<Example>getPrayerTime(@Query("latitude") String latitude, @Query("longitude") String longitude, @Query("timezonestring") String timezonestring, @Query("method") String method, @Query("school") String school);
 }
