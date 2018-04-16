@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,8 @@ import com.harbingerstudio.islamiclife.islamiclife.utils.CheckInternet;
 import com.harbingerstudio.islamiclife.islamiclife.utils.ProgressBarHandler;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -98,6 +101,8 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
     private ProgressBarHandler mProgressBarHandler;
     private CheckInternet checkInternet;
     private Snackbar snackbar;
+    String month,year;
+    private Button btnnamazcalender;
 
 
     @Nullable
@@ -109,6 +114,7 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
         txtenglishdate = (TextView)view.findViewById(R.id.txtenglishdate);
         txtsunrise = (TextView)view.findViewById(R.id.txtsunrise);
         txtsunset = (TextView)view.findViewById(R.id.txtsunset);
+        btnnamazcalender = view.findViewById(R.id.btnnamazcalender);
         mProgressBarHandler = new ProgressBarHandler(getActivity());
         //tabHost = (TabHost)view.findViewById(R.id.tabhost);
         layoutManager = new GridLayoutManager(getContext(),2);
@@ -152,6 +158,17 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
     @Override
     public void onResume() {
         super.onResume();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateandTime = sdf.format(new Date());
+         year = currentDateandTime.substring(0,4);
+         month = currentDateandTime.substring(4,6);
+         btnnamazcalender.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 loadNamajSchedule();
+             }
+         });
+        //Toast.makeText(getActivity(),year + "   "+month,Toast.LENGTH_LONG).show();
         /*PlacePicker.IntentBuilder placePickerIntent = new PlacePicker.IntentBuilder();
         try {
             startActivityForResult(placePickerIntent.build(getActivity()), PLACE_PICKER_REQUEST);
@@ -388,6 +405,7 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
             //Toast.makeText(getContext(),String.valueOf(currentLocation.getLatitude()) + "  " + String.valueOf(currentLocation.getLongitude()), Toast.LENGTH_SHORT).show();
             //Intent mIntent = new
             mProgressBarHandler.show();
+
             Call<Example> call = apiClient.getPrayerTime(String.valueOf(currentLocation.getLatitude()),String.valueOf(currentLocation.getLongitude()),strTimeZone,String.valueOf(3),String.valueOf(1));
             call.enqueue(new Callback<Example>() {
                 @Override
@@ -412,6 +430,7 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
                         recyclerView.setLayoutManager(layoutManager);
 
                         recyclerView.setAdapter(dailyPrayerTimeAdapter);
+                        btnnamazcalender.setVisibility(View.VISIBLE);
                     }
                     catch(Exception e){
                         Log.d("onResponse", "There is an error");
@@ -502,5 +521,13 @@ public class NamazFragment extends Fragment implements GoogleApiClient.OnConnect
             time = s + "AM";
         }
         return time;
+    }
+    public void loadNamajSchedule(){
+        Intent i = new Intent(getContext(),NamazCalendar.class);
+        i.putExtra("LAT",String.valueOf(currentLocation.getLatitude()));
+        i.putExtra("LON",String.valueOf(currentLocation.getLongitude()));
+        i.putExtra("MONTH", month);
+        i.putExtra("YEAR",year);
+        startActivity(i);
     }
 }

@@ -71,6 +71,6 @@ dependencies {
 
     implementation 'net.danlew:android.joda:2.9.9'
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    testImplementation  'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

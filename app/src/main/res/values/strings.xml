@@ -30,9 +30,11 @@
     <string name="sunrise">Sunrise(সূর্যোদয়)- </string>
     <string name="sunset">Sunset(সূর্যাস্ত)- </string>
 
-    <string name = "dailyprayertime">Today</string>
-    <string name = "calenderprayertime">Calender</string>
+    <string name="dailyprayertime">Today</string>
+    <string name="calenderprayertime">Calender</string>
 
     <string name="prayertimestring">Prayer Time Schedule(নামাযের দৈনিক সময়সূচী)</string>
     <string name="nointernetconnection">Please connect to internet(দয়া করে ইন্টারনেট সংযোগ করুন)</string>
+    <string name="title_activity_namaz_calendar">NamazCalendar</string>
+    <string name="namazcalender">নামাযের সময়সূচী</string>
 </resources>
